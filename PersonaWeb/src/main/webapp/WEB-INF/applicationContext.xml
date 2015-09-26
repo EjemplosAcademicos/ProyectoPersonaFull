@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @version $Id: applicationContext.xml 561608 2007-08-01 00:33:12Z vgritsenko 
+	$ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- BEANS CONFIGURACION JNDI DATASOURCE -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/personaBDOracle" />
+	</bean>
+
+	<!-- BEANS CONFIGURACION HIBERNATE -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle10gDialect
+				</prop>
+				<prop key="hibernate.show_sql">
+					false
+				</prop>
+				<prop key="hibernate.transaction.factory_class">
+					org.hibernate.transaction.JDBCTransactionFactory
+				</prop>
+			</props>
+		</property>
+		
+		<property name="mappingResources">
+			<list>
+				<value>com/ctrlz/dominio/hbm/Persona.hbm.xml</value>
+			</list>
+		</property>
+		
+	</bean>
+
+	<!-- BEANS PARA LOS CONTROLADORES -->
+	<bean id="beanPersonaCtl" class="com.ctrlz.persona.ctl.PersonaCtl" scope="prototype">
+		<property name="personaNgc" ref="beanPersonaNgc"></property>
+	</bean>
+
+	<!-- BEANS PARA LOS NEGOCIOS -->
+	<bean id="beanPersonaNgc" class="com.ctrlz.persona.ngc.PersonaNgc">
+		<property name="personaDao" ref="personaDaoPers"></property>
+	</bean>
+
+	<!-- BEANS PARA LA PERSISTENCIA -->
+	<bean id="personaDaoPers" class="com.ctrlz.persona.dao.hibernate.PersonaDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+</beans>

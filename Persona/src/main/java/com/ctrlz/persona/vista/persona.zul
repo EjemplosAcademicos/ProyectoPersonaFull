@@ -1,0 +1,28 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Persona" contentType="text/html;charset=UTF-8"?>
+<zk>
+<!-- 	<window title="Persona" border="normal" apply="com.ctrlz.persona.ctl.PersonaCtl"> -->
+	<window title="Persona" border="normal" apply="${beanPersonaCtl}">
+		<vbox width="400px">
+			<hbox>
+				<div width="120px">
+					<label value="Nombre: *" />
+				</div>
+				<textbox id="txtNombre" />
+			</hbox>
+
+			<hbox>
+				<div width="120px">
+					<label value="Apellido: " />
+				</div>
+				<textbox id="txtApellido" />
+			</hbox>
+
+			<hbox>
+				<button id="btnCrear" label="CREAR" />
+			</hbox>
+
+
+		</vbox>
+	</window>
+</zk>

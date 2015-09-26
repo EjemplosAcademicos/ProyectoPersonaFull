@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-sep-2015 11:39:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.ctrlz.dominio.dto.PersonaDTO" table="PERSONA"
+		schema="PROINT1">
+		<id name="idn" type="long">
+			<column name="IDN" precision="10" scale="0" />
+			<generator class="sequence-identity">
+				<param name="sequence">SC_PERSONA_IDN</param>
+			</generator>
+		</id>
+		<property name="vrNombre" type="string">
+			<column name="VR_NOMBRE" length="20" not-null="true" />
+		</property>
+		<property name="vrApellido" type="string">
+			<column name="VR_APELLIDO" length="20" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>
